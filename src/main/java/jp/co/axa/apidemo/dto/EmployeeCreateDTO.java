@@ -1,14 +1,20 @@
 package jp.co.axa.apidemo.dto;
 
+
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class EmployeeCreateDTO {
     @NotBlank
+    @Size(max=100)
     private String name;
     @NotNull
+    @Min(0)
     private Integer salary;
     @NotBlank
+    @Size(max=50)
     private String department;
 
     public EmployeeCreateDTO() {
