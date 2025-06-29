@@ -8,6 +8,7 @@ import jp.co.axa.apidemo.services.EmployeeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees")
-    public ResponseEntity<EmployeeDTO> saveEmployee(@RequestBody EmployeeCreateDTO employeeCreateDTO) {
+    public ResponseEntity<EmployeeDTO> saveEmployee(@Valid @RequestBody EmployeeCreateDTO employeeCreateDTO) {
         Employee saved = employeeService.saveEmployee(EmployeeMapper.toEntity(employeeCreateDTO));
         EmployeeDTO response = EmployeeMapper.toDTO(saved);
 
@@ -52,7 +53,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/employees/{employeeId}")
-    public ResponseEntity<EmployeeDTO> updateEmployee(@RequestBody EmployeeCreateDTO employeeCreateDTO,
+    public ResponseEntity<EmployeeDTO> updateEmployee(@Valid @RequestBody EmployeeCreateDTO employeeCreateDTO,
                                    @PathVariable(name = "employeeId") Long employeeId) {
         Optional<Employee> emp = employeeService.getEmployee(employeeId);
 

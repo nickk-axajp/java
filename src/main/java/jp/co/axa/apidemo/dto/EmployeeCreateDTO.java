@@ -1,8 +1,14 @@
 package jp.co.axa.apidemo.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class EmployeeCreateDTO {
+    @NotBlank
     private String name;
+    @NotNull
     private Integer salary;
+    @NotBlank
     private String department;
 
     public EmployeeCreateDTO() {}
