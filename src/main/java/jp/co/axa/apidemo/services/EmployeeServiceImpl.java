@@ -2,7 +2,6 @@ package jp.co.axa.apidemo.services;
 
 import jp.co.axa.apidemo.entities.Employee;
 import jp.co.axa.apidemo.repositories.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,12 +24,19 @@ public class EmployeeServiceImpl implements EmployeeService{
         return employeeRepository.findById(employeeId);
     }
 
-    public void saveEmployee(Employee employee){
+    public Employee saveEmployee(Employee employee){
         employeeRepository.save(employee);
+        return employee;
     }
 
-    public void deleteEmployee(Long employeeId){
+    public Boolean deleteEmployee(Long employeeId){
+        if (!employeeRepository.existsById(employeeId)) {
+            return false;
+        }
+
         employeeRepository.deleteById(employeeId);
+
+        return true;
     }
 
     public void updateEmployee(Employee employee) {

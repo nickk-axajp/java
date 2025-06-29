@@ -11,9 +11,9 @@ public interface EmployeeService {
 
     public Optional<Employee> getEmployee(Long employeeId);
 
-    public void saveEmployee(Employee employee);
+    public Employee saveEmployee(Employee employee);
 
-    public void deleteEmployee(Long employeeId);
+    public Boolean deleteEmployee(Long employeeId);
 
     public void updateEmployee(Employee employee);
 }

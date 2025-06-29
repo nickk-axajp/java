@@ -35,21 +35,24 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees")
-    public ResponseEntity<Void> saveEmployee(@RequestBody EmployeeCreateDTO employeeCreateDTO) {
-        employeeService.saveEmployee(EmployeeMapper.toEntity(employeeCreateDTO));
+    public ResponseEntity<EmployeeDTO> saveEmployee(@RequestBody EmployeeCreateDTO employeeCreateDTO) {
+        Employee saved = employeeService.saveEmployee(EmployeeMapper.toEntity(employeeCreateDTO));
+        EmployeeDTO response = EmployeeMapper.toDTO(saved);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.created(
+                java.net.URI.create("/api/v1/employees/" + response.getId())
+        ).body(response);
     }
 
     @DeleteMapping("/employees/{employeeId}")
     public ResponseEntity<Void> deleteEmployee(@PathVariable(name = "employeeId") Long employeeId) {
-        employeeService.deleteEmployee(employeeId);
+        Boolean deleted = employeeService.deleteEmployee(employeeId);
 
-        return ResponseEntity.ok().build();
+        return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 
     @PutMapping("/employees/{employeeId}")
-    public ResponseEntity<Void> updateEmployee(@RequestBody EmployeeCreateDTO employeeCreateDTO,
+    public ResponseEntity<EmployeeDTO> updateEmployee(@RequestBody EmployeeCreateDTO employeeCreateDTO,
                                    @PathVariable(name = "employeeId") Long employeeId) {
         Optional<Employee> emp = employeeService.getEmployee(employeeId);
 
@@ -58,7 +61,7 @@ public class EmployeeController {
             updated.setId(employeeId);
             employeeService.updateEmployee(updated);
 
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(EmployeeMapper.toDTO(updated));
         } else {
             return ResponseEntity.notFound().build();
         }
