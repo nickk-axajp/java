@@ -1,5 +1,8 @@
 package jp.co.axa.apidemo.controllers;
 
+import jp.co.axa.apidemo.dto.EmployeeCreateDTO;
+import jp.co.axa.apidemo.dto.EmployeeDTO;
+import jp.co.axa.apidemo.dto.EmployeeMapper;
 import jp.co.axa.apidemo.entities.Employee;
 import jp.co.axa.apidemo.services.EmployeeService;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -19,38 +23,44 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees")
-    public List<Employee> getEmployees() {
-        return employeeService.retrieveEmployees();
+    public List<EmployeeDTO> getEmployees() {
+        return employeeService.retrieveEmployees().stream().map(EmployeeMapper::toDTO).collect(Collectors.toList());
     }
 
     @GetMapping("/employees/{employeeId}")
-    public ResponseEntity<Employee> getEmployee(@PathVariable(name = "employeeId") Long employeeId) {
+    public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable(name = "employeeId") Long employeeId) {
         Optional<Employee> employee = employeeService.getEmployee(employeeId);
 
-        return employee.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return employee.map(e -> ResponseEntity.ok(EmployeeMapper.toDTO(e))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/employees")
-    public void saveEmployee(Employee employee) {
-        employeeService.saveEmployee(employee);
+    public ResponseEntity<Void> saveEmployee(@RequestBody EmployeeCreateDTO employeeCreateDTO) {
+        employeeService.saveEmployee(EmployeeMapper.toEntity(employeeCreateDTO));
 
-        System.out.println("Employee Saved Successfully");
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/employees/{employeeId}")
-    public void deleteEmployee(@PathVariable(name = "employeeId") Long employeeId) {
+    public ResponseEntity<Void> deleteEmployee(@PathVariable(name = "employeeId") Long employeeId) {
         employeeService.deleteEmployee(employeeId);
 
-        System.out.println("Employee Deleted Successfully");
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/employees/{employeeId}")
-    public void updateEmployee(@RequestBody Employee employee,
-                               @PathVariable(name = "employeeId") Long employeeId) {
+    public ResponseEntity<Void> updateEmployee(@RequestBody EmployeeCreateDTO employeeCreateDTO,
+                                   @PathVariable(name = "employeeId") Long employeeId) {
         Optional<Employee> emp = employeeService.getEmployee(employeeId);
 
         if (emp.isPresent()) {
-            employeeService.updateEmployee(employee);
+            Employee updated = EmployeeMapper.toEntity(employeeCreateDTO);
+            updated.setId(employeeId);
+            employeeService.updateEmployee(updated);
+
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 }
