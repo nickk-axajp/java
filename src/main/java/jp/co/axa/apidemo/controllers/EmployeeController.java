@@ -11,10 +11,9 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class EmployeeController {
 
-    @Autowired
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
-    public void setEmployeeService(EmployeeService employeeService) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 

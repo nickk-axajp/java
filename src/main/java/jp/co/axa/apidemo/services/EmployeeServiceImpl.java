@@ -11,20 +11,19 @@ import java.util.Optional;
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
-    public void setEmployeeRepository(EmployeeRepository employeeRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
     public List<Employee> retrieveEmployees() {
-        List<Employee> employees = employeeRepository.findAll();
-        return employees;
+        return employeeRepository.findAll();
     }
 
     public Employee getEmployee(Long employeeId) {
         Optional<Employee> optEmp = employeeRepository.findById(employeeId);
+
         return optEmp.get();
     }
 
