@@ -15,11 +15,11 @@ public class EmployeeMapper {
         return dto;
     }
 
-    public static Employee toEntity(EmployeeCreateDTO dto){
+    public static Employee toEntity(EmployeeCreateDTO dto) {
         return toEntity(dto, null);
     }
 
-    public static Employee toEntity(EmployeeCreateDTO dto,  Long employeeId) {
+    public static Employee toEntity(EmployeeCreateDTO dto, Long employeeId) {
         if (dto == null) return null;
 
         Employee employee = new Employee();

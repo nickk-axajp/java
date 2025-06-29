@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService{
+public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
@@ -24,12 +24,12 @@ public class EmployeeServiceImpl implements EmployeeService{
         return employeeRepository.findById(employeeId);
     }
 
-    public Employee saveEmployee(Employee employee){
+    public Employee saveEmployee(Employee employee) {
         employeeRepository.save(employee);
         return employee;
     }
 
-    public Boolean deleteEmployee(Long employeeId){
+    public Boolean deleteEmployee(Long employeeId) {
         if (!employeeRepository.existsById(employeeId)) {
             return false;
         }

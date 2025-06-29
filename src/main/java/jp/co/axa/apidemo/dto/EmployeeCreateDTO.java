@@ -11,7 +11,8 @@ public class EmployeeCreateDTO {
     @NotBlank
     private String department;
 
-    public EmployeeCreateDTO() {}
+    public EmployeeCreateDTO() {
+    }
 
     public EmployeeCreateDTO(String name, Integer salary, String department) {
         this.name = name;
