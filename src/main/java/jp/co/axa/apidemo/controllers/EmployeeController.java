@@ -25,7 +25,11 @@ public class EmployeeController {
 
     @GetMapping("/employees")
     public List<EmployeeDTO> getEmployees() {
-        return employeeService.retrieveEmployees().stream().map(EmployeeMapper::toDTO).collect(Collectors.toList());
+        return employeeService
+                .retrieveEmployees()
+                .stream()
+                .map(EmployeeMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/employees/{employeeId}")
@@ -66,5 +70,14 @@ public class EmployeeController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/employees/department/{department}")
+    public List<EmployeeDTO> getEmployeesByDepartment(@PathVariable String department) {
+        return employeeService
+                .getEmployeesByDepartment(department)
+                .stream()
+                .map(EmployeeMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }

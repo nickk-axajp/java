@@ -124,4 +124,20 @@ public class EmployeeControllerTests {
                 .content(objectMapper.writeValueAsString(updateDTO)))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void testGetEmployeesByDepartment() throws Exception {
+        Employee emp2 = new Employee();
+        emp2.setId(2L);
+        emp2.setName("Jane Doe");
+        emp2.setSalary(6000);
+        emp2.setDepartment("IT");
+        Mockito.when(employeeService.getEmployeesByDepartment("IT"))
+                .thenReturn(Arrays.asList(employee, emp2));
+
+        mockMvc.perform(get("/api/v1/employees/department/IT"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].department").value("IT"))
+                .andExpect(jsonPath("$[1].department").value("IT"));
+    }
 }
