@@ -21,10 +21,8 @@ public class EmployeeServiceImpl implements EmployeeService{
         return employeeRepository.findAll();
     }
 
-    public Employee getEmployee(Long employeeId) {
-        Optional<Employee> optEmp = employeeRepository.findById(employeeId);
-
-        return optEmp.get();
+    public Optional<Employee> getEmployee(Long employeeId) {
+        return employeeRepository.findById(employeeId);
     }
 
     public void saveEmployee(Employee employee){
