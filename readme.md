@@ -1,52 +1,50 @@
-### How to use this spring-boot project
+# Java Challenge
 
-- Install packages with `mvn package`
-- Run `mvn spring-boot:run` for starting the application (or use your IDE)
+This is a simple Spring Boot project for managing employees for the programming test for AXA Japan. It uses an embedded H2 database and exposes a RESTful API with Swagger documentation.
 
-Application (with the embedded H2 database) is ready to be used ! You can access the url below for testing it :
+## How to Use
 
-- Swagger UI : http://localhost:8080/swagger-ui.html
-- H2 UI : http://localhost:8080/h2-console
+1. **Install dependencies:**  
+   `mvn package`
 
-> Don't forget to set the `JDBC URL` value as `jdbc:h2:mem:testdb` for H2 UI.
+2. **Run the application:**  
+   `mvn spring-boot:run`  
+   (Or use your IDE to run the main class)
 
+3. **Access the application:**  
+   - **Swagger UI:** [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)  
+   - **H2 Console:** [http://localhost:8080/h2-console](http://localhost:8080/h2-console)  
+     - JDBC URL: `jdbc:h2:mem:testdb`
 
+4. **Run tests:**  
+   `mvn test`
 
-### Instructions
+## Features & Enhancements
 
-- download the zip file of this project
-- create a repository in your own github named 'java-challenge'
-- clone your repository in a folder on your machine
-- extract the zip file in this folder
-- commit and push
+- **DTOs:** Added Data Transfer Objects to avoid leaking domain entities through the API.
+- **New endpoint:** Added an endpoint to retrieve employees by department.
+- **Validation:** Input validation for DTOs to ensure data integrity.
+- **Optional in EmployeeService interface:** For more explicit typing instead of using `null` values.
+  - This also fixes the issue in the original code where `getEmployeeById` does `.get(id)` without checking the optional value first.
+- **RESTful Responses:** Improved API responses to follow RESTful conventions, e.g. using proper status codes .
+- **Dependency Injection:** Refactored to use constructor-based DI.
+- **Controller Tests:** Added unit tests for controller endpoints.
+- **Code Formatting:** Reformatted code using IntelliJ's build in code formatter.
 
-- Enhance the code in any ways you can see, you are free! Some possibilities:
-  - Add tests
-  - Change syntax
-  - Protect controller end points
-  - Add caching logic for database calls
-  - Improve doc and comments
-  - Fix any bug you might find
-- Edit readme.md and add any comments. It can be about what you did, what you would have done if you had more time, etc.
-- Send us the link of your repository.
+## Comments
 
-#### Restrictions
-- use java 8
+- My project would not compile when using Lombok getters and setters, so I opted to use manual getters and setters instead to having a working project.
+- If I had more time, I would add the following features:
+    - Use mapstruct for DTO mapping
+    - Authentication and authorization using Spring Security
+    - More comprehensive and global error handling
+    - Integration tests for the API
+    - Add a formatter, linter, and other static analysis tools (like Checkstyle or SonarQube)
+- Disclaimer: I used AI to help translate C# concepts and APIs to Java, but all ideas and implementations are my own.
 
+## My Java Experience
 
-#### What we will look for
-- Readability of your code
-- Documentation
-- Comments in your code 
-- Appropriate usage of spring boot
-- Appropriate usage of packages
-- Is the application running as expected
-- No performance issues
+While I have not worked with Java before, I have nearly 8 years of experience in C# and .NET. They are similar, both being object-oriented languages with strong typing and garbage collection.
+I would be excited to learn Java in more depth, and I'm sure I could quickly adapt my existing knowledge to the Java ecosystem.
 
-#### Your experience in Java
-
-Please let us know more about your Java experience in a few sentences. For example:
-
-- I have 3 years experience in Java and I started to use Spring Boot from last year
-- I'm a beginner and just recently learned Spring Boot
-- I know Spring Boot very well and have been using it for many years
+I also have had plenty of professional experience with different programming languages and paradigms, (e.g. functional programming with F#), so I am confident in my ability to learn and adapt to new technologies quickly.

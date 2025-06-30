@@ -10,9 +10,11 @@ public class EmployeeCreateDTO {
     @NotBlank
     @Size(max=100)
     private String name;
+
     @NotNull
     @Min(0)
     private Integer salary;
+
     @NotBlank
     @Size(max=50)
     private String department;
